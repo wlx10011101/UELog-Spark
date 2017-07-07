@@ -13,3 +13,12 @@ from UELogApp.models import ResultRecord
 @csrf_exempt
 def queryResult(request, userId):
     return HttpResponse(serializers.serialize('json', ResultRecord.objects.filter(userId=userId)))
+
+
+@csrf_exempt
+def startParserAndClac(request):
+    if request.method != "POST":
+        return HttpResponse(status=403, reason="start Parser and calculate only use POST")
+
+    print request.body[1:]
+    return HttpResponse("post reviced")

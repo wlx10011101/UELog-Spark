@@ -11,5 +11,6 @@ from UELogApp import views
 
 
 urlpatterns = [
-    url(r'^queryResult/(?P<userId>[0-9]+)/$', views.queryResult)
+    url(r'^queryResult/(?P<userId>[0-9]+)/$', views.queryResult),
+    url(r'^startParserAndCalc/$', views.startParserAndClac),
 ]
