@@ -20,7 +20,7 @@ class Resource(models.Model):
 class ResultRecord(models.Model):
     userId = models.ForeignKey(User)
     isfPath = models.FilePathField(path='/home/wlx/Pictures', recursive=True)
-    resultPath = models.FilePathField(path='/home/wlx/Pictures', recursive=True)
+    hdfsPath = models.FilePathField(path='/home/wlx/Pictures', recursive=True)
     parserStatus = models.CharField(max_length=20, default="NOT_COMPLETE")
     calcStatus = models.CharField(max_length=20, default="NOT_COMPLETE")
     recordTime = models.DateTimeField(default=None)

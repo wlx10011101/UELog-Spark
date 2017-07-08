@@ -5,8 +5,11 @@ from django.core import serializers
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
+import json
+import threading
 
 from UELogApp.models import ResultRecord
+from UELogApp.MissionSchedule import UELogController
 
 
 # Create your views here.
@@ -20,5 +23,10 @@ def startParserAndClac(request):
     if request.method != "POST":
         return HttpResponse(status=403, reason="start Parser and calculate only use POST")
 
-    print request.body[1:]
+    data = json.loads(request.body)
+    '''
+    注: request.body为list,so,in this list, only have qcatFilePath that need parser and calc
+    '''
+    print data, type(data)
+    threading.Thread(target=UELogController(data).startQcatMission, args=(data)).start()
     return HttpResponse("post reviced")

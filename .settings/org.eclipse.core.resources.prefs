@@ -1,6 +1,8 @@
 eclipse.preferences.version=1
+encoding//UELogApp/MissionSchedule.py=utf-8
 encoding//UELogApp/admin.py=utf-8
 encoding//UELogApp/apps.py=utf-8
 encoding//UELogApp/models.py=utf-8
+encoding//UELogApp/testSchedule.py=utf-8
 encoding//UELogApp/urls.py=utf-8
 encoding//UELogApp/views.py=utf-8
