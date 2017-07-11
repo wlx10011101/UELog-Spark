@@ -8,11 +8,13 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import threading
 
+from UELogApp.MissionSchedule import Controller
 from UELogApp.models import ResultRecord
-from UELogApp.MissionSchedule import UELogController
 
-
+THREAD_NUM = 1
 # Create your views here.
+
+
 @csrf_exempt
 def queryResult(request, userId):
     return HttpResponse(serializers.serialize('json', ResultRecord.objects.filter(userId=userId)))
@@ -22,11 +24,12 @@ def queryResult(request, userId):
 def startParserAndClac(request):
     if request.method != "POST":
         return HttpResponse(status=403, reason="start Parser and calculate only use POST")
-
     data = json.loads(request.body)
     '''
     注: request.body为list,so,in this list, only have qcatFilePath that need parser and calc
     '''
     print data, type(data)
-    threading.Thread(target=UELogController(data).startQcatMission, args=(data)).start()
+    if THREAD_NUM:
+        threading.Thread(target=Controller(data).start).start()
+        THREAD_NUM -= 1
     return HttpResponse("post reviced")

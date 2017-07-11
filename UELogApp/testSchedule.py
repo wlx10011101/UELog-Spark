@@ -7,9 +7,9 @@ Created on Jul 8, 2017
 '''
 import threading
 
-from UELogApp.MissionSchedule import LogMissionController
+from UELogApp.MissionSchedule import Controller
 
 
 if __name__ == '__main__':
     data = ["file1.json"]
-    threading.Thread(target=LogMissionController(data).startQcatMission).start()
+    threading.Thread(target=Controller(data).startQcatMission).start()
