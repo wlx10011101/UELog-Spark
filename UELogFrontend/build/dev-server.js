@@ -40,13 +40,20 @@ compiler.plugin('compilation', function (compilation) {
 })
 
 // proxy api requests
-Object.keys(proxyTable).forEach(function (context) {
-  var options = proxyTable[context]
-  if (typeof options === 'string') {
-    options = { target: options }
-  }
-  app.use(proxyMiddleware(options.filter || context, options))
-})
+// Object.keys(proxyTable).forEach(function (context) {
+//   var options = proxyTable[context]
+//   if (typeof options === 'string') {
+//     options = { target: options }
+//   }
+//   // app.use(proxyMiddleware(options.filter || context, options))
+// })
+app.use('/api', 
+proxyMiddleware({
+  target: "http://10.9.171.160:50075/webhdfs/v1/",
+  changeOrigin: true,
+  toProxy: true,
+  pathRewrite: {'^/api': '/'},
+}))
 
 // handle fallback for HTML5 history API
 app.use(require('connect-history-api-fallback')())

@@ -1,21 +1,20 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
-import Index from '@/components/Index'
+import Sidebar from '@/components/Sidebar'
+import Chart from '@/components/Chart'
+import VueResource from 'vue-resource'
 
-Vue.use(Router)
+Vue.use(Router);
+Vue.use(VueResource);
+// Vue.http.options.emulateHTTP = true;
+// Vue.http.options.emulateJSON = true;
 
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'Hello',
-      component: Hello
-    },
-    {
-      path: '/index',
-      name: 'Index',
-      component: Index
+      path: '/chart',
+      name: 'chart',
+      component: Chart
     }
   ]
 })
