@@ -30,7 +30,22 @@
 	    		self.chart.reflow()
 	    	},410)
 	    });
+	    bus.$on("updateChart", function(msg){
+	    	this.redraw();
+	    });
 	  },
+	  methods:{
+	  	redraw: function() {
+	  		console.log("redraw");
+	  		this.chart.update(this.option);
+	  	},
+
+	  	setSeries: function(seriesData) {
+	  		for (let i=0; i< seriesData.length; i++) {
+	  			this.chart.series[0].addData(seriesData[i])
+	  		}
+	  	}
+	  }
 	}
 </script>
 

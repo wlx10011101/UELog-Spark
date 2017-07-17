@@ -69,7 +69,7 @@
 		methods:{
 			toggleFullWidth:function(){
 				let self = this
-				bus.$emit("toggleFullWidth", "disapplk sdkflajf");
+				bus.$emit("toggleFullWidth", "toggleFullWidth");
 				self.lnrArrowCircle = !self.lnrArrowCircle
 			},
 		}
