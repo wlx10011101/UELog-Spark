@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import User
+from bson.json_util import default
 
 # Create your models here.
 
@@ -19,8 +20,8 @@ class Resource(models.Model):
 
 class ResultRecord(models.Model):
     userId = models.ForeignKey(User)
-    isfPath = models.CharField(max_length=255)
-    hdfsPath = models.CharField(max_length=255)
+    isfPath = models.CharField(max_length=255, default=None)
+    hdfsPath = models.CharField(max_length=255, default=None)
     parserStatus = models.CharField(max_length=20, default="NOT_COMPLETE")
     calcStatus = models.CharField(max_length=20, default="NOT_COMPLETE")
     recordTime = models.DateTimeField(auto_now_add=True)

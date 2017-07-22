@@ -1,9 +1,9 @@
-<template>
+p<template>
 	<div id="sidebar-nav" class="sidebar" v-bind:class="{'full-width': isFullWidth}">
 		<div class="sidebar-scroll">
 			<nav>
 				<ul class="nav">
-					<li><a href="#" class=""><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+					<li><a href="#/missions" class=""><i class="lnr lnr-home"></i> <span>Missions</span></a></li>
 					
 					<li>
 						<a href="#subPages" data-toggle="collapse" class="collapsed">
@@ -13,26 +13,17 @@
 						</a>
 						<div id="subPages" class="collapse">
 							<ul class="nav">
-								<li><a href="#/Chart" class="">file1</a></li>
+								<li>
+									<a class="" v-for="result in results">
+										<router-link :to="{name:'Chart', params:{hdfsPath: result.HdfsResultPath}}">
+											{{result.fileName}}
+										</router-link>
+									</a>
+								</li>
 							</ul>
 							
 						</div>
 					</li>
-					
-				<!-- 	<li>
-						<a href="#subPages1" data-toggle="collapse" class="collapsed">
-							<i class="lnr lnr-file-empty"></i>
-							<span>Pages</span> 
-							<i class="icon-submenu lnr lnr-chevron-left"></i>
-						</a>
-						<div id="subPages1" class="collapse">
-							<ul class="nav">
-								<li><a href="#" class="">Profile</a></li>
-								<li><a href="#" class="">Login</a></li>
-								<li><a href="#" class="">Lockscreen</a></li>
-							</ul>
-						</div>
-					</li> -->
 				</ul>
 			</nav>
 		</div>
@@ -44,15 +35,29 @@
 	export default{
 		data() {
 			return {
-				isFullWidth: false
+				isFullWidth: false,
+				results: [],
 			}
 			
 		},
 		mounted: function(){
 			let self = this
+			self.results = []
 			bus.$on("toggleFullWidth", function(msg){
 				self.isFullWidth = ! self.isFullWidth;
 			});
+			self.$http.get('/uelog/querySuccessRecord').then(
+				function(res){
+					let successResults = JSON.parse(res.bodyText);
+					for(let i in successResults){
+						let dataSplit = successResults[i]['HdfsResultPath'].split('/')
+						let fileName = dataSplit[dataSplit.length - 1].split('_result')[0]
+						successResults[i]['fileName'] = fileName
+						self.results.push(successResults[i])
+					}
+				}, function(err){
+					console.log(err);
+				});
 		}
 	};
 	import '@/assets/vendor/jquery/jquery.js';

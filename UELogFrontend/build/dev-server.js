@@ -47,14 +47,29 @@ compiler.plugin('compilation', function (compilation) {
 //   }
 //   // app.use(proxyMiddleware(options.filter || context, options))
 // })
-app.use('/api', 
+app.use('/hdfs', 
 proxyMiddleware({
   target: "http://10.9.171.160:50075/webhdfs/v1/",
   changeOrigin: true,
   toProxy: true,
-  pathRewrite: {'^/api': '/'},
+  pathRewrite: {'^/hdfs': '/'},
 }))
 
+app.use('/qcat', 
+proxyMiddleware({
+  target: "http://10.9.171.190:23456",
+  changeOrigin: true,
+  toProxy: true,
+  pathRewrite: {'^/qcat': '/'},
+}))
+
+app.use('/uelog', 
+proxyMiddleware({
+  target: "http://10.9.171.160:4567",
+  changeOrigin: true,
+  toProxy: true,
+  pathRewrite: {'^/uelog': '/'},
+}))
 // handle fallback for HTML5 history API
 app.use(require('connect-history-api-fallback')())
 
