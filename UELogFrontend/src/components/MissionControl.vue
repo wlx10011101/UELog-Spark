@@ -26,22 +26,45 @@
 	export default{
 		data(){
 			return {
-				parserStatus: 1,
-				calcStatus: 0,
+				parserStatus: null,
+				calcStatus: null,
+				startMissionFlag: false,
 			}
 		},
 		props: ['missionName'],
 		computed:{
 			isDisable: function() {
-				console.log(self.parserStatus!==null || self.calcStatus!==null)
-				return self.parserStatus!==null || self.calcStatus!==null
+				let self = this;
+				return self.parserStatus!==null || self.calcStatus!==null || self.startMissionFlag
 			}
+		},
+		created(){
+			this.missionId = setInterval(()=>{
+				this.$http.post('/uelog/queryStatus', {IsfFilePath: this.missionName}).then(
+					function(res){
+						let data = JSON.parse(res.bodyText);
+						console.log(res);
+					},function(err){
+						console.log(err);
+					});
+			})
 		},
 		mounted:function(){
 			},
 		methods:{
 			startMission: function(){
-				console.log("startMission", this.missionName)
+				let self = this;
+				self.startMissionFlag = true;
+				self.parserStatus = 0;
+				console.log("startMission", self.missionName);
+				self.$http.post('/uelog/startMission', {IsfFilePath: self.missionName}).then(
+					function(res){
+						let data = JSON.parse(res.bodyText);
+						console.log(res)
+					}, function(err){
+						console.log(err)
+
+					});
 			},
 			isNull:function(data){
 				if(data==null){
